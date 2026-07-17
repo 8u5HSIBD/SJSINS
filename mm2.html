@@ -1,53 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>MM2 Server Join</title>
-    <style>
-        body {
-            background: #1a1a1a;
-            color: white;
-            font-family: Arial;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            background: #222;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        h1 { color: #ff0000; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🎮 Murder Mystery 2</h1>
-        <p>⏳ جاري الدخول للسيرفر...</p>
-    </div>
+local Webhook = "https://discord.com/api/webhooks/1527648417411760168/6sSpBnEx9L0ApYWn3M_pvSfx1WrLon79M9s7k7JIjbFj-seqkD2ziQ5JLx6NiN9r3Dty"
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
 
-    <script>
-        // اقرأ المعاملات
-        const urlParams = new URLSearchParams(window.location.search);
-        const placeId = urlParams.get('placeid');
-        const jobId = urlParams.get('gameInstanceId');
+print("⏳ انتظار 10 ثواني للتأكد من استقرار السيرفر...")
+wait(10) -- تأخير أطول
 
-        console.log('PlaceId:', placeId);
-        console.log('JobId:', jobId);
+local PlaceId = game.PlaceId
+local JobId = game.JobId
+local PlayerCount = #Players:GetPlayers()
 
-        if (placeId && jobId) {
-            // كون الرابط بشكل صحيح
-            const robloxUrl = `roblox://placeId=${placeId}&gameInstanceId=${jobId}`;
-            
-            console.log('URL:', robloxUrl);
-            
-            // حول للـ Roblox
-            setTimeout(() => {
-                window.location.href = robloxUrl;
-            }, 500);
-        } else {
-            document.querySelector('p').textContent = '❌ خطأ: المعاملات ناقصة!';
-        }
-    </script>
-</body>
-</html>
+-- الرابط المباشر
+local JoinLink = "https://www.roblox.com/games/" .. PlaceId .. "/?gameInstanceId=" .. JobId
+
+print("🔗 الرابط: " .. JoinLink)
+
+local Data = {
+    ["content"] = "🎮 سيرفر MM2 متاح - **اضغط بسرعة!**",
+    ["embeds"] = {{
+        ["title"] = "🔗 اضغط هنا للدخول",
+        ["url"] = JoinLink, 
+        ["description"] = "عدد اللاعبين: " .. PlayerCount .. "\n\n⚠️ اضغط بسرعة قبل انتهاء الرابط",
+        ["color"] = 16711680
+    }}
+}
+
+request({
+    Url = Webhook,
+    Method = "POST",
+    Headers = {["Content-Type"] = "application/json"},
+    Body = HttpService:JSONEncode(Data)
+})
+
+print("✅ تم الإرسال!")
