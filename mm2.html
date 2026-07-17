@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MM2 Server Join</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: #222;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 { color: #ff0000; }
+        .loading { font-size: 20px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 MM2 Server</h1>
+        <p class="loading">⏳ جاري التحويل...</p>
+    </div>
+
+    <script>
+        // اقرأ المعاملات من الرابط
+        const params = new URLSearchParams(window.location.search);
+        const placeid = params.get('placeid');
+        const jobid = params.get('gameInstanceId');
+
+        if (placeid && jobid) {
+            // كون الرابط المباشر
+            const joinLink = `https://www.roblox.com/games/${placeid}/?gameInstanceId=${jobid}`;
+            
+            // حول لـ Roblox بعد ثانية
+            setTimeout(() => {
+                window.location.href = joinLink;
+            }, 1000);
+        } else {
+            document.querySelector('.loading').textContent = '❌ خطأ في المعاملات!';
+        }
+    </script>
+</body>
+</html>
