@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const placeId = urlParams.get('placeid');
+    const jobId = urlParams.get('jobid');
+    
+    if (placeId && jobId) {
+      window.location.href = `roblox://game/Join?placeId=${placeId}&gameInstanceId=${jobId}`;
+    } else {
+      document.body.innerHTML = "<h1>جاري التحويل...</h1>";
+    }
+  </script>
+</body>
+</html>
