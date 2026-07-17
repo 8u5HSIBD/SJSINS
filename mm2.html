@@ -18,31 +18,35 @@
             margin: 0 auto;
         }
         h1 { color: #ff0000; }
-        .loading { font-size: 20px; margin: 20px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎮 MM2 Server</h1>
-        <p class="loading">⏳ جاري التحويل...</p>
+        <h1>🎮 Murder Mystery 2</h1>
+        <p>⏳ جاري الدخول للسيرفر...</p>
     </div>
 
     <script>
-        // اقرأ المعاملات من الرابط
-        const params = new URLSearchParams(window.location.search);
-        const placeid = params.get('placeid');
-        const jobid = params.get('gameInstanceId');
+        // اقرأ المعاملات
+        const urlParams = new URLSearchParams(window.location.search);
+        const placeId = urlParams.get('placeid');
+        const jobId = urlParams.get('gameInstanceId');
 
-        if (placeid && jobid) {
-            // كون الرابط المباشر
-            const joinLink = `https://www.roblox.com/games/${placeid}/?gameInstanceId=${jobid}`;
+        console.log('PlaceId:', placeId);
+        console.log('JobId:', jobId);
+
+        if (placeId && jobId) {
+            // كون الرابط بشكل صحيح
+            const robloxUrl = `roblox://placeId=${placeId}&gameInstanceId=${jobId}`;
             
-            // حول لـ Roblox بعد ثانية
+            console.log('URL:', robloxUrl);
+            
+            // حول للـ Roblox
             setTimeout(() => {
-                window.location.href = joinLink;
-            }, 1000);
+                window.location.href = robloxUrl;
+            }, 500);
         } else {
-            document.querySelector('.loading').textContent = '❌ خطأ في المعاملات!';
+            document.querySelector('p').textContent = '❌ خطأ: المعاملات ناقصة!';
         }
     </script>
 </body>
